@@ -42,7 +42,6 @@ export class OperatorHelper {
       else if (operator === "×") ans = num2! * num1!;
       else if (operator === "÷") ans = num2! / num1!;
       else if (operator === "%") ans = num2! % num1!;
-      console.log(ans);
       // 計算結果をスタックに追加
       operandStack.push(ans);
     }
@@ -58,7 +57,6 @@ export const expressionParser = (expression: string): string => {
   let operatorStack: string[] = [];
   let i = 0;
   while (i < expression.length) {
-    console.log(operandStack);
     // オペランドの場合
     if (priority.get(expression.charAt(i)) === undefined) {
       let ope = "";
