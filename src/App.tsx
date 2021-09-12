@@ -39,8 +39,8 @@ const App = () => {
   };
 
   return (
-    <div className="container">
-      <div className="col-sm-8 col-md-6 col-lg-3 m-5 bg-black rounded transparency">
+    <div className="container d-flex justify-content-center">
+      <div className="col-8 col-sm-5 col-md-4 col-lg-3 col-xl-2 m-5 bg-black rounded transparency">
         <div className="display-parent display">
           <div className="text-end fs-3 font-light m-1">{formula}</div>
           <div className="text-end font-lg display-answer font-light m-1">
