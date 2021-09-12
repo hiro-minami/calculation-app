@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { OperatorHelper, expressionParser } from "./utils";
+import { InputHelper, OperatorHelper, expressionParser } from "./utils";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -18,13 +18,23 @@ const App = () => {
     e.preventDefault();
     setResult(OperatorHelper.optimizeNumber((+result * -1).toFixed(5)));
   };
-  const addFormula = (e: any) => {
+  const addFormulaForOperator = (e: any) => {
+    e.preventDefault();
+    if (InputHelper.canInputOperator(formula, e.target.value) === true) {
+      setFormula(formula + e.target.value);
+    }
+  };
+  const addFormulaForOperand = (e: any) => {
     e.preventDefault();
     setFormula(formula + e.target.value);
   };
   const calculate = (e: any) => {
     e.preventDefault();
-    setResult(expressionParser(formula));
+    if (
+      formula !== "" &&
+      InputHelper.canCalculate(formula[formula.length - 1]) === true
+    )
+      setResult(expressionParser(formula));
     setFormula("");
   };
 
@@ -42,7 +52,6 @@ const App = () => {
             type="button"
             className="bg-command btn-lg col-3 rounded transparency-button font-light"
             onClick={restart}
-            onTouchEnd={restart}
           >
             AC
           </button>
@@ -50,7 +59,6 @@ const App = () => {
             type="button"
             className="bg-command btn-lg col-3 rounded transparency-button font-light"
             onClick={changeCord}
-            onTouchEnd={changeCord}
           >
             +/-
           </button>
@@ -58,8 +66,7 @@ const App = () => {
             type="button"
             className="bg-command btn-lg col-3 rounded transparency-button font-light"
             value="%"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperator}
           >
             %
           </button>
@@ -67,8 +74,7 @@ const App = () => {
             type="button"
             className="bg-operator btn-lg col-3 rounded font-light"
             value="÷"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperator}
           >
             ÷
           </button>
@@ -76,8 +82,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-3 rounded font-light"
             value="7"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperand}
           >
             7
           </button>
@@ -85,8 +90,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-3 rounded font-light"
             value="8"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperand}
           >
             8
           </button>
@@ -94,8 +98,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-3 rounded font-light"
             value="9"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperand}
           >
             9
           </button>
@@ -103,8 +106,7 @@ const App = () => {
             type="button"
             className="bg-operator btn-lg col-3 rounded font-light"
             value="×"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperator}
           >
             ×
           </button>
@@ -112,8 +114,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-3 rounded font-light"
             value="4"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperand}
           >
             4
           </button>
@@ -121,8 +122,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-3 rounded font-light"
             value="5"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperand}
           >
             5
           </button>
@@ -130,8 +130,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-3 rounded font-light"
             value="6"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperand}
           >
             6
           </button>
@@ -139,8 +138,7 @@ const App = () => {
             type="button"
             className="bg-operator btn-lg col-3 rounded font-light"
             value="-"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperator}
           >
             -
           </button>
@@ -148,8 +146,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-3 rounded font-light"
             value="1"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperand}
           >
             1
           </button>
@@ -157,8 +154,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-3 rounded font-light"
             value="2"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperand}
           >
             2
           </button>
@@ -166,8 +162,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-3 rounded font-light"
             value="3"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperand}
           >
             3
           </button>
@@ -175,8 +170,7 @@ const App = () => {
             type="button"
             className="bg-operator btn-lg col-3 rounded font-light"
             value="+"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperator}
           >
             +
           </button>
@@ -184,8 +178,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-6 rounded font-light"
             value="0"
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperand}
           >
             0
           </button>
@@ -193,8 +186,7 @@ const App = () => {
             type="button"
             className="bg-secondary btn-lg col-3 rounded font-light"
             value="."
-            onClick={addFormula}
-            onTouchEnd={addFormula}
+            onClick={addFormulaForOperator}
           >
             .
           </button>
@@ -202,7 +194,6 @@ const App = () => {
             type="button"
             className="bg-operator btn-lg col-3 rounded font-light"
             onClick={calculate}
-            onTouchEnd={calculate}
           >
             =
           </button>

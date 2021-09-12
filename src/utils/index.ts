@@ -7,6 +7,25 @@ priority.set("÷", 1);
 priority.set("%", 1);
 priority.set("noOperator", -1);
 
+// 入力用のヘルパークラス
+export class InputHelper {
+  public static canInputOperator(str: string, char: string): boolean {
+    if (char === "." && this.hasPeriod(str) === true) return false;
+    return this.isOperand(str[str.length - 1]) === true;
+  }
+  public static canCalculate(str: string): boolean {
+    return this.isOperand(str[str.length - 1]) === true;
+  }
+  private static hasPeriod(str: string): boolean {
+    const operand = str.split(/[+|\-|×|÷|%]/g);
+    return operand[operand.length - 1].includes(".");
+  }
+  private static isOperand(char: string): boolean {
+    if (!char) return false;
+    return priority.get(char) === undefined;
+  }
+}
+
 // 計算用のヘルパークラス
 export class OperatorHelper {
   private static trimZero(str: string): string {
@@ -23,11 +42,13 @@ export class OperatorHelper {
   public static optimizeNumber(str: string): string {
     return str.includes(".") ? this.trimZero(str) : str;
   }
-  static operate(
+  public static operate(
     operandStack: number[],
     operatorStack: string[],
     operate: string = "noOperator"
   ): string {
+    if (operatorStack.length === 0)
+      return this.optimizeNumber(operandStack[0].toFixed(5));
     let ans = 0;
     while (
       operatorStack.length !== 0 &&
